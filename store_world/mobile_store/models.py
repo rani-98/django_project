@@ -21,23 +21,41 @@ class Mobile(models.Model):
 class Ram(models.Model):
     ram = models.CharField(max_length=100,choices=ram_choices,default=0)
     mobile = models.ForeignKey(Mobile, on_delete=models.CASCADE, related_name="ram")
+    def __str__ (self):
+        return f"{self.mobile.name}-{self.ram}"
+    
 
 class Rom(models.Model):
     rom = models.CharField(max_length=100,choices = rom_choices,default=0)
     mobile = models.ForeignKey(Mobile, on_delete=models.CASCADE, related_name="rom")
+    def __str__ (self):
+        return f"{self.mobile.name}-{self.rom}"
+    
 
 class Front_cam(models.Model):
     front_cam = models.CharField(max_length=100,choices = front_cam_choices,default=0)
     mobile = models.ForeignKey(Mobile, on_delete=models.CASCADE, related_name="front_cam")
+    def __str__ (self):
+        return f"{self.mobile.name}-{self.front_cam}"
+    
 
 class back_cam(models.Model):
     back_cam = models.CharField(max_length=100,choices = back_cam_choices,default=0)
     mobile = models.ForeignKey(Mobile, on_delete=models.CASCADE, related_name="back_cam")
+    def __str__ (self):
+        return f"{self.mobile.name}-{self.back_cam}"
+    
 
 class mobileImage(models.Model):
     image = models.ImageField(upload_to="mobile_images/")
     mobile = models.ForeignKey(Mobile, on_delete=models.CASCADE, related_name="images")
+    def __str__ (self):
+        return f"{self.mobile.name}-{self.image}"
+    
 
 class Network(models.Model):
     mobile_network = models.CharField(max_length=10,choices=network_choices,default=0)
     mobile = models.ForeignKey(Mobile, on_delete=models.CASCADE, related_name="mobile_network")
+    def __str__ (self):
+        return f"{self.mobile.name}-{self.mobile_network}"
+    

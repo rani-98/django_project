@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,7 +83,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "defaultdb",
         "USER": "avnadmin",
-        "PASSWORD": os.getenv("AIVEN_PASSWORD"),
+        "PASSWORD": config("AIVEN_PASSWORD"),
         "HOST": "pg-28187112-nagaranianji1998-999b.d.aivencloud.com",
         "PORT": "26974",
     }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-cyan-100 to-blue-200">
+    <h1 class="font-bold text-3xl underline">Cell City...</h1>
+
+    {% for x in products %}
+
+    <div>
+        <img src="{{x.previewImage.url}}" class="p-4 rounded-xl object-cover grow h-80 w-72 object-top">
+        <p>{{ x.name }}</p>
+        <p>{{ x.price }}</p>
+        <p>{{ x.discountPrice }}</p>
+        <p>{{x.description}}</p>
+        <p>{{x.Process}}</p>
+
+        {% for y in x.ram.all %}
+        <p>{{y.ram}}</p>
+        {% endfor %}
+
+        {% for y in x.rom.all %}
+        <p>{{y.rom}}</p>
+        {% endfor %}
+
+        {% for y in x.front_cam.all %}
+        <p>{{y.front_cam}}</p>
+        {% endfor %}
+
+        {%for y in x.back_cam.all %}
+        <p>{{y.back_cam}}</p>
+        {% endfor %}
+
+        {% for y in x.mobile_network.all %}
+
+        <p>{{y.mobile_network}}</p>
+        {%endfor%}
+
+        {% for y in x.images.all %}
+        <img src="{{y.image.url}}">
+        {%endfor%}
+
+    </div>
+    {% endfor %}
+    
+
+</body>
+</html>
