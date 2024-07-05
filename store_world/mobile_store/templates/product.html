@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cell city</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+  </head>
+  <body>
+    <h1 class="text-3xl "> product details here</h1>
+    {% for x in product %}
+
+    <div class=" grid grid-cols-2 gap-3 p-7  items-center justify-center">
+        
+         <img src="{{x.previewImage.url}}" class="rounded-xl object-cover grow  h-100 w-100 p-10 object-top shadow-red-300">
+        
+         <div class="">
+            <p class="gap-5 text-center text-3xl font-bold">{{ x.name }}</p>
+            <p>
+
+                <span class="text-xl font-bold text-slate-400 line-through">₹{{ x.price }}</span>
+                <span class="text-xl font-bold text-black">₹{{ x.discountPrice }}</span>
+            </p>
+            
+        
+            <p class="text-xl font-bold">description</p>
+            <p> {{x.description}}</p>
+            <p>{{x.Process}}</p>
+         <p class=" font-bold">ram: </p>
+         <div class="flex gap-3 item-center">  
+             {% for y in x.ram.all %}
+             <p>{{y.ram}}</p>
+             {% endfor %}
+         </div> 
+
+        <p class="text-xl font-bold">rom: </p>
+        <div class="flex gap-3 item-center">  
+
+            {% for y in x.rom.all %}
+            <p>{{y.rom}}</p>
+            {% endfor %}
+        </div>
+        
+        <p class="text-xl font-bold">front_cam : </p>
+        <div class="flex gap-3 item-center">  
+
+        {% for y in x.front_cam.all %}
+        <p>{{y.front_cam}}</p>
+        {% endfor %}
+        </div>
+        
+        <p class="text-xl font-bold">back_cam : </p>
+        <div class="flex gap-3 item-center">  
+
+        {%for y in x.back_cam.all %}
+        <p>{{y.back_cam}}</p>
+        {% endfor %}
+        </div>
+        
+        <p class="text-xl font-bold">mobile_network : </p>
+        <div class="flex gap-3 item-center">  
+
+        {% for y in x.mobile_network.all %}
+        <p>{{y.mobile_network}}</p>
+        {%endfor%}
+        </div>
+        
+        {% for y in x.images.all %}
+        <img src="{{y.image.url}}">
+        {%endfor%}
+        <button class="bg-indigo-400 h-10 m-2 w-80 rounded-lg">buy now</button>
+        <button class="bg-yellow-400 h-10 m-2 w-80 rounded-lg">add to cart</button>
+
+    </div>
+    </div>
+
+        
+  {%endfor%}
+   
+  </body>
+</html>
