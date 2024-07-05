@@ -12,3 +12,7 @@ def productInfo(request,product_id):
        
         product = Mobile.objects.filter(id=product_id)
         return render(request,"product.html",{"product":product})
+
+def cart(request):
+        cart = Mobile.objects.all()
+        return render(request,"cart.html",{"cart":cart})
