@@ -4,25 +4,38 @@
 {% block content %}
 
 <section class="bg-gray-200 pt-5">
-    <div class="grid grid-cols-5 gap-10 items-center bg-white ">
+    <div class="grid grid-cols-5 gap-8 items-center bg-white ">
 
         
         {% for x in products %}
         
-        <div class=" grid grid-cols-1 border-2 p-4 gap-3 justify-center">
+        <div class=" grid grid-cols-1 object-fit  p-4 gap-3 justify-center">
             <a href="{% url 'productInfo' x.id %}">
                 <img src="{{x.previewImage.url}}" class="p-4 rounded-xl object-center h-80 w-72 shadow-md">
 
             </a>
-            <p class="text-center text-xl font-bold">{{ x.name }}</p>
+            <div class="flex space-between">
+
+                <p class="text-center text-xl grow line-clamp-1 font-bold">{{ x.name }}</p>
+                {% if not shirt.is_wished %} 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-slate-200 rounded-full p-1 shrink-0" onclick="addToWishList( this, {{ shirt.id }})">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" 
+                      />
+                    </svg>
+                {% else %}                  
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-slate-200 rounded-full p-1 shrink-0 fill-red-500" onclick="removeFromWishList(this, {{ shirt.id }})">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" 
+                      />
+                    </svg>
+          {% endif %}
+            </div>
             <p>
                 <span class="text-md font-bold text-slate-400 line-through">₹{{ x.price }}</span>
                 <span class="text-md font-bold text-black">₹{{ x.discountPrice }}</span>
             </p>
-            <a href="{% url 'cart' %}">
-            <button class="bg-gray-200 hover:bg-blue-500 h-10 w-full m-2 rounded-lg">Add To Cart </button>
-            </a>
-            <button class="bg-yellow-400  hover:bg-orange-500 h-10 w-full m-2 rounded-lg">Buy Now</button>
+            <button class="bg-gray-300 hover:bg-blue-500 h-10 w-full p-3 rounded-lg">Add To Cart </button>
+            
+            <button class="bg-yellow-400  hover:bg-orange-500 h-10 w-full p-3 rounded-lg">Buy Now</button>
         </div>
         {% endfor %}
     </div>

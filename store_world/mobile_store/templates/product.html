@@ -11,16 +11,16 @@
     <h1 class="text-3xl "> product details here</h1>
     {% for x in product %}
 
-    <div class=" grid grid-cols-2 gap-3 p-7  items-center justify-center">
+    <div class=" grid grid-cols-2 gap-5 p-10 items-center ">
         
-         <img src="{{x.previewImage.url}}" class="rounded-xl object-cover grow  h-100 w-100 p-10 object-top shadow-red-300">
+         <img src="{{x.previewImage.url}}" class="rounded-xl object-cover h-full w-full p-10  shadow-md shadow-red-300">
         
-         <div class="">
-            <p class="gap-5 text-center text-3xl font-bold">{{ x.name }}</p>
+         <div class="grid gap-4">
+            <p class="pb-10 text-center text-4xl font-bold">{{ x.name }}</p>
             <p>
 
-                <span class="text-xl font-bold text-slate-400 line-through">₹{{ x.price }}</span>
-                <span class="text-xl font-bold text-black">₹{{ x.discountPrice }}</span>
+                <span class="text-2xl font-bold text-slate-400 line-through">₹{{ x.price }}</span>
+                <span class="text-2xl font-bold text-black">₹{{ x.discountPrice }}</span>
             </p>
             
         
@@ -28,7 +28,7 @@
             <p> {{x.description}}</p>
             <p class="text-xl font-bold">processer : </p>
             <p>{{x.Process}}</p>
-         <p class=" font-bold">ram: </p>
+         <p class=" text-xl font-bold">ram: </p>
          <div class="flex gap-3 item-center">  
              {% for y in x.ram.all %}
              <p>{{y.ram}}</p>
@@ -70,10 +70,10 @@
         {% for y in x.images.all %}
         <img src="{{y.image.url}}">
         {%endfor%}
-        <a href="{% url 'cart' %}">
-            <button class="bg-gray-200 hover:bg-blue-500 h-10 w-full m-2 rounded-lg">Add To Cart </button>
-        </a>        
-        <button class="bg-yellow-400  hover:bg-orange-500 h-10 w-full m-2 rounded-lg">Buy Now</button>
+        
+            <button class="font-bold bg-gray-300 hover:bg-blue-500 h-10 w-full p-3 rounded-lg">Add To Cart </button>
+             
+        <button class=" font-bold bg-yellow-400  hover:bg-orange-500 h-10 w-full p-3 rounded-lg">Buy Now</button>
 
     </div>
     </div>
