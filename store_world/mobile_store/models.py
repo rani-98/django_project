@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 
@@ -58,4 +59,37 @@ class Network(models.Model):
     mobile = models.ForeignKey(Mobile, on_delete=models.CASCADE, related_name="mobile_network")
     def __str__ (self):
         return f"{self.mobile.name}-{self.mobile_network}"
+    
+
+
+class wishlist(models.Model):
+    mobile = models.ForeignKey(Mobile, on_delete=models.CASCADE, related_name="wishlist")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="wishlist",
+        default=None,
+    )
+
+    def __str__(self):
+        return f"{self.mobile.name} - {self.user.username}"
+    
+
+class Cart(models.Model):
+    mobile = models.ForeignKey(Mobile, on_delete=models.CASCADE, related_name="cart")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="cart",
+        default=None,
+    )
+   # quantity = models.IntegerField(default=1)
+    price = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.mobile.name}-{self.mobile.id}"
+
+
+
+
     
