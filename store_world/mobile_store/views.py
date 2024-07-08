@@ -87,14 +87,16 @@ def add_to_cart(request, product_id):
 
     if cart.exists():
         cart = cart.first()
+        cart.quantity += 1
         cart.save()
-        return JsonResponse({"success": "Shirt added to cart"})
+
+        return JsonResponse({"success": "mobile added to cart","redirect_url" : " "})
 
     mobile = Mobile.objects.get(id=product_id)
     cart = Cart(mobile=mobile, user=user, price=mobile.discountPrice)
     cart.save()
 
-    return JsonResponse({"success": "mobile added to cart"})
+    return JsonResponse({"success": "mobile added to cart", "redirect_url" : " " })
 
 
 @login_required
@@ -105,17 +107,23 @@ def remove_from_cart(request, product_id):
 
     user = request.user
 
-    cart_item = Cart.objects.filter(mobile_id=product_id, user=user).first()
+    cart = Cart.objects.filter(id=product_id, user=user)
 
-    if cart_item:
-        if cart_item.quantity > 1:
-            cart_item.quantity -= 1
-            cart_item.save()
-        else:
-            cart_item.delete()
+    if cart.exists():
+        cart = cart.first()
+        cart.quantity -= 1
+        if cart.quantity <= 0:
+            cart.delete()
+            
 
-        return JsonResponse({"success": "product removed from cart"})
-    else:
-        return JsonResponse({"error": "product not found in cart"})
 
+
+        else: 
+            cart.save()
+
+    
+        return JsonResponse({"success": "product removed from cart", "redirect_url" : " " })
+    
+
+   
 

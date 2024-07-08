@@ -34,13 +34,13 @@
                                 <td class="py-4">{{ cart.mobile.discountPrice }}</td>
                                 <td class="py-4">
                                     <div class="flex items-center">
-                                        <button class="border rounded-md py-2 px-4 mr-2">-</button>
-                                        <span class="text-center w-8">1</span>
-                                        <button class="border rounded-md py-2 px-4 ml-2">+</button>
+                                        <button class="border rounded-md py-2 px-4 mr-2" onclick="removeFromCart({{ cart.id }})">-</button>
+                                        <span class="text-center w-8" id="quantity">{{cart.quantity}}</span>
+                                        <button class="border rounded-md py-2 px-4 ml-2" onclick="addToCart({{ cart.id }})">+</button>
                                     </div>
                                 </td>
-                                <td class="py-4">{{ cart.mobile.discountPrice }}</td>
-                                <td><button onclick="removeFromCart({{x.id}})">Remove from Cart</button>
+                                <td class="py-4" id="updateddiscountprice">{{ cart.mobile.discountPrice }}</td>
+                                <td><button onclick="removeFromCart({{ cart.id }})">Remove</button>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -78,7 +78,34 @@
     <script>
 
         const BASE_URL = `http://${window.location.host}`;
-        const REMOVE_CART_URL = `http://${window.location.host}/cart/remove/`
+        
+        async function addToCart(Id) {
+            const url = BASE_URL + "/add_to_cart/" + Id + '/';
+        
+            // Get CSRF token from cookies
+            const csrftoken = getCookie('csrftoken');
+        
+            const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken // Include CSRF token in headers
+            },
+           
+            });
+        
+            const data = await response.json();
+        
+            if (data.success) {
+            alert("Added to cart");
+            if (data.redirect_url) {
+                window.location.href = data.redirect_url;
+                   }
+            
+            } else {
+            alert("Failed to add to cart");
+            }
+        }
 
 
         async function removeFromCart(Id) {
@@ -100,7 +127,11 @@
         
             if (data.success) {
             alert("Remove from cart");
-            } else {
+            if (data.redirect_url) {
+                        window.location.href = data.redirect_url;
+                    }
+            } 
+            else {
             alert("Failed to remove from cart");
             }
         }
@@ -124,6 +155,26 @@
       
 
         
+
+    </script>
+    <script>
+        // Function to update the discount price
+    function updateDiscountPrice() {
+        // Get the quantity value
+        var quantity = document.getElementById('quantity').value;
+
+        // Assuming you have the discount price in a variable or can get it from the cart object
+        var discountPricePerUnit = {{ cart.mobile.discountPrice }}; // Replace this with the actual value if it's dynamic
+
+        // Calculate the total discount price
+        var totalDiscountPrice = quantity * discountPricePerUnit;
+
+        // Update the HTML element with the new discount price
+        document.getElementById('updateddiscountprice').innerText = totalDiscountPrice.toFixed(2); // Format to 2 decimal places if needed
+    }
+
+    // Call the function once to set the initial value based on default quantity
+    updateDiscountPrice();
 
     </script>
 

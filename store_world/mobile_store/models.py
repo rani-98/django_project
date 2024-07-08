@@ -83,8 +83,9 @@ class Cart(models.Model):
         related_name="cart",
         default=None,
     )
-   # quantity = models.IntegerField(default=1)
+    quantity = models.IntegerField(default=1)
     price = models.IntegerField(null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.mobile.name}-{self.mobile.id}"

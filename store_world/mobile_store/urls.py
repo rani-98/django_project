@@ -8,4 +8,4 @@ urlpatterns = [path("", product, name = "product"),
                path("add-wishlist/<int:product_id>/",add_to_wishlist, name="add_to_wishlist"),
                path("remove-wishlist/<int:product_id>/",Remove_from_Wishlist, name="Remove_from_Wishlist"),
                path("add_to_cart/<int:product_id>/",add_to_cart, name="add_to_cart"),
-               path("remove_from_cart/<int:product_id>/",remove_from_cart, name="remove from cart"),]
+               path("remove_from_cart/<int:product_id>/", remove_from_cart, name="remove_from_cart"),]
