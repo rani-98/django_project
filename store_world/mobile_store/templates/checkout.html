@@ -7,31 +7,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div class="grid grid-cols-2 border-3 border-black">
-        <div class="grid grid-cols-1 rounded-md">
-            <a href="{% url 'address' %}" class="text-3xl font-bold">Add new address</a>
+    <div class="bg-gray-300 p-6 rounded-lg shadow-md">
+        <div class="flex flex-col-2">
+            <h1 class="font-bold text-2xl">Saved Address</h1>
             <form action="{% url 'checkout_page' %}" method="post">
                 {% csrf_token %}
-                <div class="flex flex-col justify-center items-center block rounded-md">
+                <div class=" m-6">
                     {% for x in addresses %}
-                    <div>
+                    <div class="border-black  gap-3 w-90 h-16 ">
                         <input type="radio" name="address" value="{{ x.id }}" required>
-                        <span>{{ x.first_name }}, {{ x.mobile_number }}</span>
-                        <span>{{ x.email }}</span>
+                        <span class="font-bold">{{ x.first_name }},</span>
+                        <span>{{ x.mobile_number }}, {{ x.email }},</span>
                         <span>{{ x.colony }}, {{ x.village }}, {{ x.city }}, {{ x.state }}, {{ x.pin_code }}.</span>
                         <a href="{% url 'delete_address' x.id %}">delete</a>
                     </div>
                     {% endfor %}
                 </div>
-                <div>
-                    <p>Amount {{ total_price }}</p>
-                    <p>Delivery charges {{ delivery_charges }}</p>
-                    <p>Total Amount {{ total_amount }}</p>
+                <a href="{% url 'address' %}" class="text-2xl font-medium border border-black text-red-500 underline-offset-2">Add new address..</a>
+                <div class="">
+                    <p class="text-lg">Amount: <span class="pl-6">{{ total_price }}</span></p>
+                    <p>Delivery charges :{{ delivery_charges }}</p>
+                    <p>Total Amount: {{ total_amount }}</p>
                 </div>
+                
                 {% if error %}
                 <p class="text-red-500">{{ error }}</p>
                 {% endif %}
-                <button type="submit">Order</button>
+                <button type="submit" class="bg-blue-500 p-4 m-6 rounded-lg">Place Order</button>
             </form>
         </div>
     </div>

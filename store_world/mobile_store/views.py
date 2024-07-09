@@ -211,6 +211,9 @@ def order_page(request):
 def order_success(request):
      return render(request, "order_success.html")
 
+def back_to_home(request):
+    return render(request, 'cart.html')
+
 
 
      
