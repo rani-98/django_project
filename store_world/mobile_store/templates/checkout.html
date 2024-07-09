@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cell City</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="grid grid-cols-2 border-3 border-black">
+        <div class="grid grid-cols-1 rounded-md">
+            <a href="{% url 'address' %}" class="text-3xl font-bold">Add new address</a>
+            <form action="{% url 'checkout_page' %}" method="post">
+                {% csrf_token %}
+                <div class="flex flex-col justify-center items-center block rounded-md">
+                    {% for x in addresses %}
+                    <div>
+                        <input type="radio" name="address" value="{{ x.id }}" required>
+                        <span>{{ x.first_name }}, {{ x.mobile_number }}</span>
+                        <span>{{ x.email }}</span>
+                        <span>{{ x.colony }}, {{ x.village }}, {{ x.city }}, {{ x.state }}, {{ x.pin_code }}.</span>
+                        <a href="{% url 'delete_address' x.id %}">delete</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    <p>Amount {{ total_price }}</p>
+                    <p>Delivery charges {{ delivery_charges }}</p>
+                    <p>Total Amount {{ total_amount }}</p>
+                </div>
+                {% if error %}
+                <p class="text-red-500">{{ error }}</p>
+                {% endif %}
+                <button type="submit">Order</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

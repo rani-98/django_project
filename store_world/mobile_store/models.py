@@ -90,7 +90,43 @@ class Cart(models.Model):
     def __str__(self):
         return f"{self.mobile.name}-{self.mobile.id}"
 
+class Checkout(models.Model):
+    mobile = models.ForeignKey(Mobile,on_delete=models.CASCADE, related_name="checkout")
+    
 
-
+    def __str__(self):
+        return f"{self.mobile.name}-{self.mobile.id}"
 
     
+class address(models.Model):
+    first_name = models.CharField(default=None)
+    mobile_number = models.CharField(default=None)
+    email = models.CharField(default=None)
+    village = models.CharField(default=None)
+    state = models.CharField(default=None)
+    city = models.CharField(default=None)
+    colony = models.CharField(default=None)
+    pin_code = models.CharField(default=None)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="address",
+        default=None,
+    )
+
+    def __str__(self):
+        return self.user.username
+    
+class cart_orders(models.Model):
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="orders",
+        default=None,
+    )
+    order = models.ForeignKey(Cart,on_delete=models.CASCADE, related_name="order")
+    address = models.ForeignKey(address,on_delete=models.CASCADE, related_name="address")
+
+    def __str__(self):
+        return self.user.username
