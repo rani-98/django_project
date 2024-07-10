@@ -125,8 +125,16 @@ class cart_orders(models.Model):
         related_name="orders",
         default=None,
     )
+    '''
     order = models.ForeignKey(Cart,on_delete=models.CASCADE, related_name="order")
     address = models.ForeignKey(address,on_delete=models.CASCADE, related_name="address")
+    '''
+    mobile_name = models.CharField(default=None)
+    quantity = models.CharField(default=None)
+    price = models.CharField(default=None)
+    address = models.CharField(default=None)
+    
+
 
     def __str__(self):
         return self.user.username

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+</head>
+<body>
+
+    <h1>My Orders</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Mobile Name</th>
+                <th>Mobile Price</th>
+                <th>Quantity</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.order.mobile.name }}</td>
+                <td>{{ order.order.mobile.price }}</td>
+                <td>{{ order.order.quantity }}</td>
+                <td>{{ order.address.village }}, {{ order.address.city }}, {{ order.address.state }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

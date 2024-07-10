@@ -18,11 +18,12 @@
                                 <th class="text-left font-semibold">Price</th>
                                 <th class="text-left font-semibold">Quantity</th>
                                 <th class="text-left font-semibold">Total</th>
+                                <th class="text-left font-semibold">Status</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {% for cart in cart %}
+                            {% for cart in carts %}
 
                             <tr>
                                 <td class="py-4">
@@ -31,7 +32,7 @@
                                         <span class="font-semibold">{{ cart.mobile.name }}</span>
                                     </div>
                                 </td>
-                                <td class="py-4">{{ cart.mobile.discountPrice }}</td>
+                                <td class="py-4" id="discountPrice-{{ cart.id }}">{{ cart.mobile.discountPrice }}</td>
                                 <td class="py-4">
                                     <div class="flex items-center">
                                         <button class="border rounded-md py-2 px-4 mr-2" onclick="removeFromCart({{ cart.id }})">-</button>
@@ -39,12 +40,20 @@
                                         <button class="border rounded-md py-2 px-4 ml-2" onclick="addToCart({{ cart.id }})">+</button>
                                     </div>
                                 </td>
-                                <td class="py-4" id="updateddiscountprice">{{ cart.mobile.discountPrice }}</td>
-                                <td><button class="bg-red-200" onclick="removeFromCart({{ cart.id }})">Remove</button>
-                                </td>
+
+                                <td class="py-4" >{{ cart.price_per_cart }}</td>
+                            </td>
+                            <td>
+                                {% if cart.ordered %}
+                                Ordered
+                                {% else %}
+                                Not Ordered
+                                {% endif %}
+                            </td>
+                            <td><button class="bg-red-200" onclick="removeFromCart({{ cart.id }})">Remove</button>
                             </tr>
                             {% endfor %}
-                            <!-- More product rows -->
+                            <!-- More product rowsid="updateddiscountprice-{{ cart.id }}" -->
                         </tbody>
                     </table>
                 </div>
@@ -159,23 +168,16 @@
     </script>
     <script>
         // Function to update the discount price
-    function updateDiscountPrice() {
-        // Get the quantity value
-        var quantity = document.getElementById('quantity').value;
+        function updateDiscountPrice(cartId, quantity) {
+            const discountPriceElement = document.getElementById(`discountPrice-${cartId}`);
+            const updatedDiscountPriceElement = document.getElementById(`updateddiscountprice-${cartId}`);
+            
+            const discountPricePerUnit = parseFloat(discountPriceElement.innerText);
+            const totalDiscountPrice = quantity * discountPricePerUnit;
 
-        // Assuming you have the discount price in a variable or can get it from the cart object
-        var discountPricePerUnit = {{ cart.mobile.discountPrice }}; // Replace this with the actual value if it's dynamic
-
-        // Calculate the total discount price
-        var totalDiscountPrice = quantity * discountPricePerUnit;
-
-        // Update the HTML element with the new discount price
-        document.getElementById('updateddiscountprice').innerText = totalDiscountPrice.toFixed(2); // Format to 2 decimal places if needed
-    }
-
-    // Call the function once to set the initial value based on default quantity
-    updateDiscountPrice();
-
+            updatedDiscountPriceElement.innerText = totalDiscountPrice.toFixed(2);
+        }
+        return updateDiscountPrice(cartId, quantity)
     </script>
 
    
