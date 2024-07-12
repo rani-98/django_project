@@ -18,12 +18,11 @@
                                 <th class="text-left font-semibold">Price</th>
                                 <th class="text-left font-semibold">Quantity</th>
                                 <th class="text-left font-semibold">Total</th>
-                                <th class="text-left font-semibold">Status</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {% for cart in cart %}
+                            {% for cart in carts %}
 
                             <tr>
                                 <td class="py-4">
@@ -43,13 +42,7 @@
 
                                 <td class="py-4" >{{ cart.price_per_cart }}</td>
                             </td>
-                            <td>
-                                {% if cart.ordered %}
-                                   Ordered
-                                {% else %}
-                                   Not Ordered
-                                {% endif %}
-                            </td>
+                            
                             <td><button class="bg-red-200" onclick="removeFromCart({{ cart.id }})">Remove</button>
                             </tr>
                             {% endfor %}

@@ -67,13 +67,10 @@ def Remove_from_Wishlist(request, product_id):
 def cart_view(request):
     user = request.user
     carts = Cart.objects.filter(user=user)
-    orders = cart_orders.objects.filter(user=user)
-    ordered_mobile_ids = set(order.order.mobile.id for order in orders)
 
     # Calculate total price for each cart item
     for cart in carts:
         cart.price_per_cart = cart.quantity * cart.mobile.discountPrice
-        cart.ordered = cart.mobile.id in ordered_mobile_ids  # Check if the item has been ordered
 
     total_price = sum(cart.price_per_cart for cart in carts)
 
@@ -131,54 +128,45 @@ def remove_from_cart(request, product_id):
 
 def checkout_page(request):
     user = request.user
-     
+
     addresses = address.objects.filter(user=user)
     cart_items = Cart.objects.filter(user=user)
-    total_price = sum(item.price for item in cart_items)
-    delivery_charges = 40
-    total_amount = total_price + delivery_charges
 
     if request.method == 'POST':
         selected_address_id = request.POST.get('address')
-        try:
-            selected_address = address.objects.get(id=selected_address_id)
-        except address.DoesNotExist:
-            # Handle the error appropriately
-            return render(request, 'checkout.html', {
-                "addresses": addresses,
-                'cart_items': cart_items, 
-                'total_price': total_price, 
-                'total_amount': total_amount, 
-                'delivery_charges': delivery_charges,
-                'error': 'The selected address does not exist.'
-            })
-        for address in selected_address:
-            address.name = address.first_name
-            address.mobile_number = address. mobile_number
-            address.email = address.email
-            address.village = address.village
-            address.city = address.city
-            address.colony = address.colony
-            address.state = address.state
-            address.pin_code = address.pin_code
+        selected_address = get_object_or_404(address, id=selected_address_id)
 
-        address = f"{address.name}, {address.mobile_number}, {address.email}, {address.village}, {address.city}, {address.colony}, {address.state},{address.pin_code}"
+        Address_details = f"{selected_address.first_name}, {selected_address.mobile_number}, {selected_address.email}, {selected_address.village}, {selected_address.city}, {selected_address.colony}, {selected_address.state}, {selected_address.pin_code}"
 
         for item in cart_items:
-            cart_orders.objects.create(user=user, order=item, address=selected_address, )
-        #cart_items.delete()
-        # Clear the cart after ordering
-            
+            cart_orders.objects.create(
+                user=user,
+                mobile_name=item.mobile.name,
+                quantity=item.quantity,
+                price=item.price,
+                address=Address_details,
+            )
 
-        return redirect('product')  # Change to a success page or wherever you want to redirect
+
+        cart_items.delete()  # Clear the cart after ordering
+
+        return redirect('product') 
+    for item in cart_items:
+        item.price_per_cart = item.quantity * item.mobile.discountPrice
+    total_price = sum(cart.price_per_cart for cart in cart_items)
+    delivery_charges = 40
+    total_amount = total_price + delivery_charges
+
+
 
     return render(request, 'checkout.html', {
         "addresses": addresses,
-        'cart_items': cart_items, 
-        'total_price': total_price, 
-        'total_amount': total_amount, 
+        'cart_items': cart_items,
+        'total_price': total_price,
+        'total_amount': total_amount,
         'delivery_charges': delivery_charges
     })
+
 
 def address_page(request):
     user = request.user
@@ -221,15 +209,16 @@ def delete_address(request,address_id):
 
 def order_page(request):
     user = request.user
-    orders = cart_orders.objects.filter(user=user).select_related('order__mobile', 'address')
+    orders = cart_orders.objects.filter(user=user)
+    for order in orders:
+       order.mobile_name = order.mobile_name
+    mobile = Mobile.objects.filter(name = order.mobile_name)
+    
 
-    return render(request, 'order_page.html', {'orders': orders})
 
-def order_success(request):
-     return render(request, "order_success.html")
+    return render(request, 'order_page.html', {'orders': orders, 'mobile' : mobile})
 
-def back_to_home(request):
-    return render(request, 'cart.html')
+
 
 
 

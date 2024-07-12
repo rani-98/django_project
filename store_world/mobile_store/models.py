@@ -115,7 +115,9 @@ class address(models.Model):
     )
 
     def __str__(self):
+ 
         return self.user.username
+
     
 class cart_orders(models.Model):
 
@@ -125,16 +127,17 @@ class cart_orders(models.Model):
         related_name="orders",
         default=None,
     )
-    '''
-    order = models.ForeignKey(Cart,on_delete=models.CASCADE, related_name="order")
-    address = models.ForeignKey(address,on_delete=models.CASCADE, related_name="address")
-    '''
-    mobile_name = models.CharField(default=None)
-    quantity = models.CharField(default=None)
-    price = models.CharField(default=None)
-    address = models.CharField(default=None)
+    
+    #order = models.ForeignKey(Cart,on_delete=models.CASCADE, related_name="order")
+    #address = models.ForeignKey(address,on_delete=models.CASCADE, related_name="address")
+    
+    mobile_name = models.CharField(default="N/A")
+    quantity = models.CharField(default="N/A")
+    price = models.CharField(default="N/A")
+    address = models.CharField(default="N/A")
     
 
 
     def __str__(self):
         return self.user.username
+        

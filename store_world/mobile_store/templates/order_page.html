@@ -20,10 +20,12 @@
         <tbody>
             {% for order in orders %}
             <tr>
-                <td>{{ order.order.mobile.name }}</td>
-                <td>{{ order.order.mobile.price }}</td>
-                <td>{{ order.order.quantity }}</td>
-                <td>{{ order.address.village }}, {{ order.address.city }}, {{ order.address.state }}</td>
+                {% for x in mobile %}
+                <td><a href="{% url 'productInfo' x.id %}">{{ order.mobile_name }}</a></td>
+                {% endfor %}
+                <td>{{ order.price }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.address}}</td>
             </tr>
             {% endfor %}
         </tbody>
