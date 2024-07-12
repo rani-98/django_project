@@ -23,7 +23,7 @@
                         </thead>
 
                         <tbody>
-                            {% for cart in carts %}
+                            {% for cart in cart %}
 
                             <tr>
                                 <td class="py-4">
@@ -45,9 +45,9 @@
                             </td>
                             <td>
                                 {% if cart.ordered %}
-                                Ordered
+                                   Ordered
                                 {% else %}
-                                Not Ordered
+                                   Not Ordered
                                 {% endif %}
                             </td>
                             <td><button class="bg-red-200" onclick="removeFromCart({{ cart.id }})">Remove</button>
