@@ -26,9 +26,33 @@ def product(request):
 
 
 def productInfo(request,product_id):
+        user = request.user
        
         product = Mobile.objects.filter(id=product_id)
-        return render(request,"product.html",{"product":product})
+        addresses = address.objects.filter(user=user)
+        if request.method == 'POST':
+            selected_address_id = request.POST.get('address')
+            selected_address = get_object_or_404(address, id=selected_address_id)
+
+            Address_details = f"{selected_address.first_name}, {selected_address.mobile_number}, {selected_address.email}, {selected_address.village}, {selected_address.city}, {selected_address.colony}, {selected_address.state}, {selected_address.pin_code}"
+            for x in product:
+
+                cart_orders.objects.create(
+                    user=user,
+                    mobile_name=x.name,
+                    #quantity=x.quantity,
+                    price=x.discountPrice,
+                    address=Address_details,
+                )
+            return redirect("product")
+        for x in product:
+            x.is_wished = False
+            if x.wishlist.filter(user=user).exists():
+                x.is_wished = True
+                print("product.is_wished", x.is_wished)
+        
+
+        return render(request,"product.html",{"product":product, "addresses" : addresses})
 
 @csrf_protect
 def add_to_wishlist(request,product_id):
