@@ -15,6 +15,7 @@
                 <th>Mobile Price</th>
                 <th>Quantity</th>
                 <th>Address</th>
+                <th>Remove Order</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,7 @@
                 <td>{{ order.price }}</td>
                 <td>{{ order.quantity }}</td>
                 <td>{{ order.address}}</td>
+                <td><a href="{% url 'delete_order' order.id %}">Delete</a></td>
             </tr>
             {% endfor %}
         </tbody>

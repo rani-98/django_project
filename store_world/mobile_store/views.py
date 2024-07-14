@@ -8,12 +8,22 @@ from django.contrib.auth.decorators import login_required
 
 
 
-# Create your views here.
+@csrf_protect
 def product(request):
 
-        products = Mobile.objects.all()
         user=request.user
-
+        if request.method == "POST":
+            name = request.POST.get('search')
+            product = Mobile.objects.filter( name=name)
+            """product.is_wished = False
+        # check if the shirt is in the wishlist
+            if product.wishlist.filter(user=user).exists():
+                product.is_wished = True
+                print("product.is_wished", product.is_wished)
+                  """           
+            return render(request, 'index.html',{"product":product})
+        
+        products = Mobile.objects.all()
         for product in products:
               product.is_wished = False
         # check if the shirt is in the wishlist
@@ -32,18 +42,24 @@ def productInfo(request,product_id):
         addresses = address.objects.filter(user=user)
         if request.method == 'POST':
             selected_address_id = request.POST.get('address')
+            quantity = request.POST.get('quantity')
+            discountPrice = request.POST.get('discountPrice')
+            name = request.POST.get('name')
+            print(quantity)
+            print(discountPrice)
+            print(name)
             selected_address = get_object_or_404(address, id=selected_address_id)
 
             Address_details = f"{selected_address.first_name}, {selected_address.mobile_number}, {selected_address.email}, {selected_address.village}, {selected_address.city}, {selected_address.colony}, {selected_address.state}, {selected_address.pin_code}"
-            for x in product:
-
-                cart_orders.objects.create(
-                    user=user,
-                    mobile_name=x.name,
-                    #quantity=x.quantity,
-                    price=x.discountPrice,
-                    address=Address_details,
-                )
+           
+                
+            cart_orders.objects.create(
+                user=user,
+                mobile_name=name,
+                quantity=quantity,
+                price=discountPrice,
+                address=Address_details,
+            )
             return redirect("product")
         for x in product:
             x.is_wished = False
@@ -237,10 +253,14 @@ def order_page(request):
     for order in orders:
        order.mobile_name = order.mobile_name
     mobile = Mobile.objects.filter(name = order.mobile_name)
-    
-
-
     return render(request, 'order_page.html', {'orders': orders, 'mobile' : mobile})
+
+def delete_order(request,order_id):
+    user = request.user
+    order = cart_orders.objects.filter(user=user,id=order_id)
+    order.delete()
+    return redirect('order_page')
+
 
 
 
