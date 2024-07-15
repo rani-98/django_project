@@ -1,18 +1,11 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Mobile, wishlist, Cart, address, cart_orders
-import json
+from mobile_store.models import Mobile, wishlist, Cart, address, cart_orders
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-
-""" product.is_wished = False
-         check if the shirt is in the wishlist
-            if product.wishlist.filter(user=user).exists():
-                product.is_wished = True
-                print("product.is_wished", product.is_wished)"""
-                           
+        
             
 @csrf_protect
 def product(request):

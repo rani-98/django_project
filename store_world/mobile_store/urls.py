@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import product, productInfo, cart_view, add_to_wishlist, Remove_from_Wishlist, add_to_cart, remove_from_cart, checkout_page, address_page, delete_address, order_page, delete_order
+from mobile_store.views import product, productInfo, cart_view, add_to_wishlist, Remove_from_Wishlist, add_to_cart, remove_from_cart, checkout_page, address_page, delete_address, order_page, delete_order
 
 
 
