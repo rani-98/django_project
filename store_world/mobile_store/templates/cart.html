@@ -8,9 +8,9 @@
 <div class="bg-gray-100 h-screen py-8">
     <div class="container mx-auto px-4">
         <h1 class="text-2xl font-semibold mb-4">My Cart</h1>
-        <div class="flex flex-col md:flex-row gap-4">
+        <div class="flex flex-col md:flex-row gap-3">
             <div class="md:w-3/4">
-                <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+                <div class="bg-white rounded-lg shadow-md p-3 mb-4">
                     <table class="w-full">
                         <thead>
                             <tr>
@@ -25,18 +25,18 @@
                             {% for cart in carts %}
 
                             <tr>
-                                <td class="py-4">
+                                <td class="py-2">
                                     <div class="flex items-center">
-                                        <img class="h-16 w-16 mr-4" src="{{cart.mobile.previewImage.url}}" alt="Product image">
+                                        <img class="h-16 w-16 mr-2" src="{{cart.mobile.previewImage.url}}" alt="Product image">
                                         <span class="font-semibold">{{ cart.mobile.name }}</span>
                                     </div>
                                 </td>
-                                <td class="py-4" id="discountPrice-{{ cart.id }}">{{ cart.mobile.discountPrice }}</td>
-                                <td class="py-4">
+                                <td class="" id="discountPrice-{{ cart.id }}">{{ cart.mobile.discountPrice }}</td>
+                                <td class="py-3">
                                     <div class="flex items-center">
-                                        <button class="border rounded-md py-2 px-4 mr-2" onclick="removeFromCart({{ cart.id }})">-</button>
-                                        <span class="text-center w-8" id="quantity">{{cart.quantity}}</span>
-                                        <button class="border rounded-md py-2 px-4 ml-2" onclick="addToCart({{ cart.id }})">+</button>
+                                        <button class="border rounded-md py-2 px-4 mr-1" onclick="removeFromCart({{ cart.id }})">-</button>
+                                        <span class="text-center w-4" id="quantity">{{cart.quantity}}</span>
+                                        <button class="border rounded-md py-2 px-4 ml-1" onclick="addToCart({{ cart.id }})">+</button>
                                     </div>
                                 </td>
 
