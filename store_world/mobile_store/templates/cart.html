@@ -71,7 +71,11 @@
                         <span class="font-semibold">Total</span>
                         <span class="font-semibold">{{ total_price }}</span>
                     </div>
+                    {% if carts %}
                     <a href="{% url 'checkout_page' %}"> <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button></a>
+                    {% else %}
+                    <a href=""> <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button></a>
+                    {% endif %}
                 </div>
             </div>
         </div>

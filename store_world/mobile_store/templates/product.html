@@ -6,7 +6,7 @@
     <title>cell city</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
+  <body class="italic">
     <h1 class="text-2xl font-bold">product details here</h1>
     <form method="POST">
       {% csrf_token %} {% for x in product %}
@@ -62,11 +62,13 @@
           </div>
           <div>
             <div class="flex flex-col">
-              <div class="m-6">
+              <h1>Select Address : </h1>
+              <div class="m-6 p-6">
+
                 {% for x in addresses %}
                 <div class="border-black gap-3 w-90 h-16">
                   <input
-                    type="radio"
+                    type="checkbox"
                     name="address"
                     value="{{ x.id }}"
                     required
@@ -84,8 +86,12 @@
 
               <a
                 href="{% url 'address' %}"
-                class="text-2xl font-medium border border-black text-red-500 underline-offset-2"
-                >Add new address..</a
+                class="flex justify-center items-center rounded-md text-white bg-green-600 border-2 p-3 text-xl"
+                ><p class="text-center">Add new address..</p>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                </svg>
+                </a
               >
             </div>
           </div>
@@ -130,45 +136,61 @@
               +
             </button>
           </div>
+          <div class="flex justify-between">
+            <p>{{x.description}}</p>
+          </div>
+          <div class="flex items-center gap-10">
 
-          <p class="text-xl font-bold">description :</p>
-          <p>{{x.description}}</p>
-          <p class="text-xl font-bold">processer :</p>
-          <p>{{x.Process}}</p>
-          <p class="text-xl font-bold">ram:</p>
-          <div class="flex gap-3 item-center">
-            {% for y in x.ram.all %}
-            <p>{{y.ram}}</p>
-            {% endfor %}
+            <p class="text-xl font-bold">processer :</p>
+            <p>{{x.Process}}</p>
+          </div>
+          <div class="flex items-center gap-10">
+
+            <p class="text-xl font-bold">ram:</p>
+            <div class="flex gap-3 item-center">
+              {% for y in x.ram.all %}
+              <p>{{y.ram}}</p>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="flex items-center gap-10">
+
+            <p class="text-xl font-bold">rom:</p>
+            <div class="flex gap-3 item-center">
+              {% for y in x.rom.all %}
+              <p>{{y.rom}}</p>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="flex items-center gap-10">
+
+            <p class="text-xl font-bold">front_cam :</p>
+            <div class="flex gap-3 item-center">
+              {% for y in x.front_cam.all %}
+              <p>{{y.front_cam}}</p>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="flex items-center gap-10">
+
+            <p class="text-xl font-bold">back_cam :</p>
+            <div class="flex gap-3 item-center">
+              {%for y in x.back_cam.all %}
+              <p>{{y.back_cam}}</p>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="flex items-center gap-10">
+
+            <p class="text-xl font-bold">mobile_network :</p>
+            <div class="flex gap-3 item-center">
+              {% for y in x.mobile_network.all %}
+              <p>{{y.mobile_network}}</p>
+              {%endfor%}
+            </div>
           </div>
 
-          <p class="text-xl font-bold">rom:</p>
-          <div class="flex gap-3 item-center">
-            {% for y in x.rom.all %}
-            <p>{{y.rom}}</p>
-            {% endfor %}
-          </div>
 
-          <p class="text-xl font-bold">front_cam :</p>
-          <div class="flex gap-3 item-center">
-            {% for y in x.front_cam.all %}
-            <p>{{y.front_cam}}</p>
-            {% endfor %}
-          </div>
-
-          <p class="text-xl font-bold">back_cam :</p>
-          <div class="flex gap-3 item-center">
-            {%for y in x.back_cam.all %}
-            <p>{{y.back_cam}}</p>
-            {% endfor %}
-          </div>
-
-          <p class="text-xl font-bold">mobile_network :</p>
-          <div class="flex gap-3 item-center">
-            {% for y in x.mobile_network.all %}
-            <p>{{y.mobile_network}}</p>
-            {%endfor%}
-          </div>
 
           <button
             class="font-bold bg-gray-300 hover:bg-blue-500 h-10 w-full p-3 rounded-lg" type="button"
@@ -178,7 +200,7 @@
           </button>
 
           <button
-            class="font-bold bg-yellow-400 hover:bg-orange-500 h-10 w-full rounded-lg" type="submit">
+            class="flex justify-center font-bold bg-yellow-400 hover:bg-orange-500 h-10 w-full rounded-lg" type="submit">
           
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-8 h-8">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />

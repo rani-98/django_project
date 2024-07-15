@@ -24,7 +24,7 @@
             {% for order in orders %}
             <tr>
                 {% for x in mobile %}
-                <td class="text-black hover:text-indigo-800 hover:font-medium"><a href="{% url 'productInfo' x.id %}">{{ order.mobile_name }}</a></td>
+                <td class="border-black border-b-2  text-black hover:text-indigo-800 hover:font-medium"><a href="{% url 'productInfo' x.id %}">{{ order.mobile_name }}</a></td>
                 {% endfor %}
                 <td class="border border-black">{{ order.price }}</td>
                 <td class="border border-black">{{ order.quantity }}</td>

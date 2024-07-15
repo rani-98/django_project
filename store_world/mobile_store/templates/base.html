@@ -13,14 +13,13 @@
   </head>
   <body>
     <section class="flex items-center justify-between bg-blue-200">
-      <h1 class="font-bold text-3xl pl-4 underline">cell city..</h1>
+      <h1 class="font-bold text-3xl pl-4 underline"><a href="{% url 'product' %}">cell city..</a></h1>
       <div class="">
 
-        <form class="w-full pr-4" method="POST">
-          {% csrf_token %}
+        <form method="get" class="w-full" onsubmit="searchMobiles(event)">
           <input
             type="text"
-            class="border text-lg border-gray-400 rounded-lg w-72 p-2"
+            class="border text-lg border-gray-400 rounded-lg w-full p-2"
             placeholder="what are you looking for?"
             id="search-input"
             name="search"
@@ -48,6 +47,8 @@
         </a>
         <a href="{% url 'order_page' %}" class="font-medium">My Orders</a>
       </ul>
+      
+      
     </section>
     {% block content %}
       {% endblock %} 
@@ -56,4 +57,19 @@
 {% endblock %}
 
   </body>
+  <script>
+    const BASE_URL = "http://" + window.location.host + "/"
+
+     function searchMobiles(event) {
+        // this will prevent the form from submitting
+       event.preventDefault();
+
+        const searchText = event.target.search.value;
+
+        const url = BASE_URL +  "?search=" + searchText;
+        window.location.href = url;
+    
+      }
+
+  </script>
 </html>

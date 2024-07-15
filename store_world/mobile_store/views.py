@@ -7,31 +7,33 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
-
+""" product.is_wished = False
+         check if the shirt is in the wishlist
+            if product.wishlist.filter(user=user).exists():
+                product.is_wished = True
+                print("product.is_wished", product.is_wished)"""
+                           
+            
 @csrf_protect
 def product(request):
 
         user=request.user
-        if request.method == "POST":
-            name = request.POST.get('search')
-            product = Mobile.objects.filter( name=name)
-            """product.is_wished = False
+        search = request.GET.get('search', "")
+        if search:
+            products = Mobile.objects.filter( name__icontains=search)
+
+        else:
+            products = Mobile.objects.all()
+        for product in products:
+            product.is_wished = False
         # check if the shirt is in the wishlist
             if product.wishlist.filter(user=user).exists():
                 product.is_wished = True
                 print("product.is_wished", product.is_wished)
-                  """           
-            return render(request, 'index.html',{"product":product})
-        
-        products = Mobile.objects.all()
-        for product in products:
-              product.is_wished = False
-        # check if the shirt is in the wishlist
-              if product.wishlist.filter(user=user).exists():
-                   product.is_wished = True
-                   print("product.is_wished", product.is_wished)
 
         return render(request,"index.html",{"products":products})
+        
+        
 
 
 
