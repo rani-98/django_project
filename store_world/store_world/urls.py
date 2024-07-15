@@ -21,7 +21,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include("auth_user.urls")),
     path('',include("mobile_store.urls")),
     
     
