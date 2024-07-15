@@ -74,7 +74,8 @@
                     {% if carts %}
                     <a href="{% url 'checkout_page' %}"> <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button></a>
                     {% else %}
-                    <a href=""> <button class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button></a>
+                     <button class="bg-gray-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                    <h1 class="text-red-500">your cart is empty</h1>
                     {% endif %}
                 </div>
             </div>

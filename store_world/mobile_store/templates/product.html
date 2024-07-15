@@ -11,11 +11,11 @@
     <form method="POST">
       {% csrf_token %} {% for x in product %}
 
-      <div class="lg:grid lg:grid-cols-2 sm:grid sm:grid-cols-1 gap-5 p-10 items-center">
+      <div class="lg:grid lg:grid-cols-2 sm:grid sm:grid-cols-1 gap-5 p-10 ">
         <div class="flex flex-col h-full">
           <div class="flex relative items-center">
             
-            <img src="{{x.previewImage.url}}" class="h-full w-full p-2" />
+            <img src="{{x.previewImage.url}}" class="h-84 w-full p-2" />
             <div class="flex flex-col gap-4 absolute top-0">
               {% for y in x.images.all %}
               <img
@@ -73,6 +73,7 @@
                     value="{{ x.id }}"
                     required
                   />
+                  
                   <span class="font-bold m-4">{{ x.first_name }},</span>
                   <span>{{ x.mobile_number }}, {{ x.email }},</span>
                   <span
@@ -97,7 +98,7 @@
           </div>
         </div>
 
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-3">
           <input type="text" class="text-xl font-bold" value="{{ x.name }}" name="name"/>
 
           <p>
