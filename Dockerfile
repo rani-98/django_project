@@ -23,4 +23,4 @@ ENV PORT=8000
  
 EXPOSE ${PORT}
  
-CMD gunicorn --bind :${PORT} --workers 2 store_world.store_world.wsgi
+CMD ["gunicorn", "store_world.store_world.wsgi:application", "--bind", "0.0.0.0:${PORT}"]
