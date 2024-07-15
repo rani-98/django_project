@@ -61,11 +61,17 @@ def productInfo(request,product_id):
                 address=Address_details,
             )
             return redirect("product")
+        
+
         for x in product:
             x.is_wished = False
             if x.wishlist.filter(user=user).exists():
                 x.is_wished = True
+                
                 print("product.is_wished", x.is_wished)
+            
+        
+        
         
 
         return render(request,"product.html",{"product":product, "addresses" : addresses})

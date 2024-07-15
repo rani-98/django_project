@@ -20,7 +20,7 @@
           {% csrf_token %}
           <input
             type="text"
-            class="border text-lg border-gray-400 rounded-lg w-full p-2"
+            class="border text-lg border-gray-400 rounded-lg w-72 p-2"
             placeholder="what are you looking for?"
             id="search-input"
             name="search"
@@ -28,7 +28,7 @@
           <button type="submit" class="hidden">Submit</button>
         </form>
       </div>
-      <ul>
+      <ul class="flex gap-3 pr-4">
         <a href="{% url 'cart_view' %}">
           
           <svg
@@ -46,7 +46,7 @@
             />
           </svg>
         </a>
-        <a href="{% url 'order_page' %}">My Orders</a>
+        <a href="{% url 'order_page' %}" class="font-medium">My Orders</a>
       </ul>
     </section>
     {% block content %}
