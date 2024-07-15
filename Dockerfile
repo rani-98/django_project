@@ -25,7 +25,8 @@ WORKDIR /app
 COPY --from=builder /app/venv venv
 
 # Copy the application code
-COPY store_world store_world
+COPY store_world store_world/store_world
+COPY mobile_store store_world/mobile_store
 
 # Set environment variables for the virtual environment and port
 ENV VIRTUAL_ENV=/app/venv
